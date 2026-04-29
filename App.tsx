@@ -8,22 +8,25 @@ import { CorporatePage } from './components/CorporatePage';
 import { ContactPage } from './components/ContactPage';
 import { Leaderboards } from './components/Leaderboards';
 import { OpportunityBoard } from './components/OpportunityBoard';
-import { PricingPage } from './components/PricingPage';
+import { ScenesPage } from './components/ScenesPage';
 import { HowToGetGigs } from './components/HowToGetGigs';
-import { BookerGettingStarted } from './components/BookerGettingStarted';
 import { FanGettingStarted } from './components/FanGettingStarted';
-import { ProducerGettingStarted } from './components/ProducerGettingStarted';
+import { OrganizerGettingStarted } from './components/OrganizerGettingStarted';
 import { RevenueTicketing } from './components/RevenueTicketing';
 import { DigitalEngagement } from './components/DigitalEngagement';
-import { ProducerManagementCenter } from './components/ProducerManagementCenter';
+import { OrganizerManagementCenter } from './components/OrganizerManagementCenter';
 import { UserDashboard } from './components/UserDashboard';
 import { PostSpotModal } from './components/PostSpotModal';
 import { PageType, UserRole } from './types';
-import { Home as HomeIcon, Search, Calendar, User, Trophy, Briefcase } from 'lucide-react';
+import { Home as HomeIcon, Search, Calendar, User, Trophy, Briefcase, MapPin } from 'lucide-react';
 
-const MobileBottomNav: React.FC<{ currentPage: PageType; navigateTo: (page: PageType) => void }> = ({ currentPage, navigateTo }) => {
+const MobileBottomNav: React.FC<{ 
+  currentPage: PageType; 
+  navigateTo: (page: PageType) => void;
+}> = ({ currentPage, navigateTo }) => {
   const items = [
     { icon: HomeIcon, label: 'Home', page: PageType.HOME },
+    { icon: MapPin, label: 'Scenes', page: PageType.SCENES },
     { icon: Briefcase, label: 'Gigs', page: PageType.OPPORTUNITIES },
     { icon: Trophy, label: 'Leaders', page: PageType.LEADERBOARDS },
     { icon: User, label: 'Profile', page: PageType.DASHBOARD },
@@ -35,12 +38,12 @@ const MobileBottomNav: React.FC<{ currentPage: PageType; navigateTo: (page: Page
         <button
           key={item.page}
           onClick={() => navigateTo(item.page)}
-          className={`flex flex-col items-center gap-1 transition-all ${
+          className={`flex flex-col items-center gap-1 transition-all flex-1 ${
             currentPage === item.page ? 'text-amber-500 scale-110' : 'text-[#8892a4]'
           }`}
         >
-          <item.icon className="w-6 h-6" />
-          <span className="text-[10px] font-bold uppercase tracking-tighter">{item.label}</span>
+          <item.icon className="w-5 h-5" />
+          <span className="text-[9px] font-bold uppercase tracking-tighter">{item.label}</span>
         </button>
       ))}
     </div>
@@ -52,6 +55,7 @@ function App() {
   const [initialTab, setInitialTab] = useState<string | null>(null);
   const [userRole, setUserRole] = useState<UserRole>('fan');
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -99,22 +103,20 @@ function App() {
         return <Leaderboards />;
       case PageType.OPPORTUNITIES:
         return <OpportunityBoard role={userRole} onPostSpot={() => setIsPostModalOpen(true)} />;
-      case PageType.PRICING:
-        return <PricingPage navigateTo={navigateTo} initialTab={initialTab} />;
+      case PageType.SCENES:
+        return <ScenesPage navigateTo={navigateTo} initialTab={initialTab} />;
       case PageType.HOW_TO_GET_GIGS:
         return <HowToGetGigs />;
-      case PageType.BOOKER_GETTING_STARTED:
-        return <BookerGettingStarted />;
+      case PageType.ORGANIZER_GETTING_STARTED:
+        return <OrganizerGettingStarted />;
       case PageType.FAN_GETTING_STARTED:
         return <FanGettingStarted navigateTo={navigateTo} />;
-      case PageType.PRODUCER_GETTING_STARTED:
-        return <ProducerGettingStarted />;
       case PageType.REVENUE_TICKETING:
         return <RevenueTicketing />;
       case PageType.DIGITAL_ENGAGEMENT:
         return <DigitalEngagement />;
-      case PageType.PRODUCER_MANAGEMENT_CENTER:
-        return <ProducerManagementCenter />;
+      case PageType.ORGANIZER_MANAGEMENT_CENTER:
+        return <OrganizerManagementCenter />;
       case PageType.DASHBOARD:
         return <UserDashboard role={userRole} setRole={setUserRole} />;
       default:
@@ -127,13 +129,18 @@ function App() {
       <Navbar 
         currentPage={currentPage} 
         navigateTo={navigateTo} 
-        onPostSpot={() => setIsPostModalOpen(true)} 
+        onPostSpot={() => setIsPostModalOpen(true)}
+        isOpen={isMenuOpen}
+        setIsOpen={setIsMenuOpen}
       />
-      <main className="flex-grow pb-20 lg:pb-0">
+      <main className="flex-grow pb-24 lg:pb-0">
         {renderContent()}
       </main>
       <Footer navigateTo={navigateTo} />
-      <MobileBottomNav currentPage={currentPage} navigateTo={navigateTo} />
+      <MobileBottomNav 
+        currentPage={currentPage} 
+        navigateTo={navigateTo} 
+      />
       
       {isPostModalOpen && (
         <PostSpotModal onClose={() => setIsPostModalOpen(false)} />

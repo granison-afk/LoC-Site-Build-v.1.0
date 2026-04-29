@@ -8,17 +8,16 @@ export enum PageType {
   LEADERBOARDS = 'leaderboards',
   OPPORTUNITIES = 'opportunities',
   DASHBOARD = 'dashboard',
-  PRICING = 'pricing',
+  SCENES = 'scenes',
   HOW_TO_GET_GIGS = 'how_to_get_gigs',
-  BOOKER_GETTING_STARTED = 'booker_getting_started',
+  ORGANIZER_GETTING_STARTED = 'organizer_getting_started',
   FAN_GETTING_STARTED = 'fan_getting_started',
-  PRODUCER_GETTING_STARTED = 'producer_getting_started',
   REVENUE_TICKETING = 'revenue_ticketing',
   DIGITAL_ENGAGEMENT = 'digital_engagement',
-  PRODUCER_MANAGEMENT_CENTER = 'producer_management_center'
+  ORGANIZER_MANAGEMENT_CENTER = 'organizer_management_center'
 }
 
-export type UserRole = 'fan' | 'comedian' | 'venue' | 'booker';
+export type UserRole = 'fan' | 'comedian' | 'venue' | 'organizer';
 
 export interface Comedian {
   id: string;

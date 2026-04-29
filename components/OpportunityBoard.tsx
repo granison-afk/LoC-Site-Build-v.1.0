@@ -8,7 +8,7 @@ interface OpportunityBoardProps {
 }
 
 export const OpportunityBoard: React.FC<OpportunityBoardProps> = ({ role, onPostSpot }) => {
-  const [mainTab, setMainTab] = useState<'comedians' | 'bookers'>('comedians');
+  const [mainTab, setMainTab] = useState<'comedians' | 'organizers'>('comedians');
   const [view, setView] = useState<'browse' | 'invites'>('browse');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -17,6 +17,7 @@ export const OpportunityBoard: React.FC<OpportunityBoardProps> = ({ role, onPost
     { id: 2, title: "After Dinner Speaker", venue: "Goldman Sachs", location: "Global / Remote", date: "Dec 15", pay: "$2,500", type: "Corporate", tags: ["Corporate Clean"] },
     { id: 3, title: "Open Mic Headliner", venue: "Chuckles Pub", location: "Manchester", date: "Weekly", pay: "Drinks + $20", type: "Bar Gig", tags: ["Open to All"] },
     { id: 4, title: "Writing Gig: Roast Battle", venue: "TV Production House", location: "London", date: "Jan 2026", pay: "$400/Day", type: "Writing", tags: ["Experience Required"] },
+    { id: 5, title: "Private Birthday Party", venue: "Private Residence", location: "Beverly Hills", date: "Feb 14", pay: "$1,200", type: "Private", tags: ["Clean Only", "High Energy"] },
   ];
 
   return (
@@ -37,7 +38,7 @@ export const OpportunityBoard: React.FC<OpportunityBoardProps> = ({ role, onPost
         <div className="flex items-center gap-2 mb-8 lg:mb-12 overflow-x-auto no-scrollbar py-1">
           {[
             { label: 'FOR COMEDIANS', id: 'comedians' },
-            { label: 'FOR BOOKERS', id: 'bookers' }
+            { label: 'FOR ORGANIZERS', id: 'organizers' }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -91,7 +92,7 @@ export const OpportunityBoard: React.FC<OpportunityBoardProps> = ({ role, onPost
                     <div>
                       <label className="text-[10px] font-black uppercase tracking-widest text-[#8892a4] block mb-3">Gig Category</label>
                       <div className="space-y-2">
-                        {['Showcase Spot', 'Open Mic', 'Corporate', 'Writing', 'TV/Film'].map(tag => (
+                        {['Showcase', 'Corporate', 'Private', 'Writing', 'TV/Film'].map(tag => (
                           <label key={tag} className="flex items-center gap-3 cursor-pointer group">
                             <div className="w-4 h-4 rounded border border-white/10 bg-[#0a0e1a] flex items-center justify-center group-hover:border-[#e53e3e] transition-all">
                               <CheckCircle2 className="w-3 h-3 text-[#e53e3e] scale-0 group-has-[:checked]:scale-100 transition-transform" />
@@ -146,7 +147,7 @@ export const OpportunityBoard: React.FC<OpportunityBoardProps> = ({ role, onPost
                      <div className="flex flex-col md:flex-row justify-between gap-6">
                        <div className="flex-grow">
                          <div className="flex items-center gap-3 mb-2">
-                           <span className={`px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest ${opp.type === 'Corporate' ? 'bg-[#f6a623] text-[#0a0e1a]' : 'bg-[#1e293b] text-[#8892a4]'}`}>
+                           <span className={`px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest ${['Corporate', 'Private'].includes(opp.type) ? 'bg-[#f6a623] text-[#0a0e1a]' : 'bg-[#1e293b] text-[#8892a4]'}`}>
                              {opp.type}
                            </span>
                            <span className="text-[10px] font-bold text-[#8892a4] flex items-center gap-1">
@@ -196,7 +197,7 @@ export const OpportunityBoard: React.FC<OpportunityBoardProps> = ({ role, onPost
             </div>
           </div>
         ) : (
-          /* FOR BOOKERS LANDING CONTENT */
+          /* FOR ORGANIZERS LANDING CONTENT */
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-5xl mx-auto space-y-24">
              <div className="text-center">
                 <div className="inline-flex p-6 bg-[#131b2e] rounded-3xl border border-white/5 mb-8">

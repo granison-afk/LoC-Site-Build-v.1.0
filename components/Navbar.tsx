@@ -1,22 +1,23 @@
 
 import React, { useState } from 'react';
 import { PageType } from '../types';
-import { Menu, X, QrCode, LayoutDashboard } from 'lucide-react';
+import { Menu, X, LayoutDashboard } from 'lucide-react';
 
 interface NavbarProps {
   currentPage: PageType;
   navigateTo: (page: PageType, tab?: string) => void;
   onPostSpot: () => void;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ currentPage, navigateTo, onPostSpot }) => {
-  const [isOpen, setIsOpen] = useState(false);
+export const Navbar: React.FC<NavbarProps> = ({ currentPage, navigateTo, onPostSpot, isOpen, setIsOpen }) => {
 
   const navItems = [
     { label: 'HOMEBASE', page: PageType.HOME },
+    { label: 'SCENES', page: PageType.SCENES },
     { label: 'GIGS BOARD', page: PageType.OPPORTUNITIES },
     { label: 'LEADERBOARDS', page: PageType.LEADERBOARDS },
-    { label: 'PRICING', page: PageType.PRICING },
   ];
 
   return (
@@ -61,13 +62,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, navigateTo, onPostS
 
           {/* Action Area */}
           <div className="flex items-center gap-2 sm:gap-4">
-            <button 
-              className="p-1.5 sm:p-2 text-[#8892a4] hover:text-white transition-colors"
-              title="QR Scan"
-            >
-              <QrCode className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
-            
             <button 
               onClick={() => navigateTo(PageType.DASHBOARD)}
               className="hidden md:flex text-[#8892a4] hover:text-white transition-colors p-2 bg-[#0f1628] rounded-lg border border-white/5"

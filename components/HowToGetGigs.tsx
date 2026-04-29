@@ -34,7 +34,7 @@ export const HowToGetGigs: React.FC = () => {
             <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-xl font-black mb-6">3</div>
             <h3 className="text-xl font-black uppercase mb-4">Get Booked</h3>
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
-              Bookers review your profile and videos. When they like what they see, you get the booking. Simple as that.
+              Organizers review your profile and videos. When they like what they see, you get the booking. Simple as that.
             </p>
           </div>
         </div>

@@ -1,8 +1,5 @@
 {
   "name": "League of Comedy",
-  "description": "A premier performer booking and gig management platform connecting venues, bookers, and comedians worldwide. Discover, book, and manage live comedy events with professional tools for gig discovery, video showcases, and event management.",
-  "requestFramePermissions": [
-    "camera",
-    "microphone"
-  ]
+  "description": "A premier performer booking and gig management platform connecting venues, organizers, and comedians worldwide. Discover, book, and manage live comedy events with professional tools for gig discovery, video showcases, and event management.",
+  "requestFramePermissions": []
 }

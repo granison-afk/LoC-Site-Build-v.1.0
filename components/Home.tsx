@@ -49,6 +49,9 @@ export const Home: React.FC<HomeProps> = ({ navigateTo, onPostSpot, initialTab }
   const [selectedComedianId, setSelectedComedianId] = useState<number | null>(null);
   const [alphabetFilter, setAlphabetFilter] = useState<string | null>(null);
   const [isMobileAlphabetOpen, setIsMobileAlphabetOpen] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState('USA');
+
+  const countries = ['USA', 'UK', 'Canada', 'Australia', 'France', 'Germany', 'India'];
 
   React.useEffect(() => {
     setActiveTab(initialTab || null);
@@ -58,7 +61,8 @@ export const Home: React.FC<HomeProps> = ({ navigateTo, onPostSpot, initialTab }
     { label: 'COMEDY SHOWS', id: 'SHOWS' },
     { label: 'COMEDY ROSTER', id: 'ROSTER' },
     { label: 'VENUES', id: 'VENUES' },
-    { label: 'FESTIVALS', id: 'FESTIVALS' }
+    { label: 'FESTIVALS', id: 'FESTIVALS' },
+    { label: 'CLIPS', id: 'CLIPS' }
   ];
 
   const getSearchPlaceholder = () => {
@@ -67,6 +71,7 @@ export const Home: React.FC<HomeProps> = ({ navigateTo, onPostSpot, initialTab }
       case 'ROSTER': return 'Search by Comedian, Venue, or City';
       case 'VENUES': return 'Search comedy clubs, bars, or theaters';
       case 'FESTIVALS': return 'Search comedy festivals & tours';
+      case 'CLIPS': return 'Search funny clips & specials';
       default: return 'Search...';
     }
   };
@@ -248,6 +253,42 @@ export const Home: React.FC<HomeProps> = ({ navigateTo, onPostSpot, initialTab }
     </div>
   );
 
+  const renderClips = () => (
+    <div className="animate-in fade-in duration-500">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {[1, 2, 3, 4, 5, 6].map(i => (
+          <div key={i} className="glass-card rounded-[2.5rem] overflow-hidden border border-white/5 group h-full flex flex-col">
+            <div className="aspect-video relative overflow-hidden bg-slate-900">
+              <img src={`https://picsum.photos/seed/clip${i}/800/450`} className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" alt="Clip" />
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-100 group-hover:opacity-0 transition-opacity">
+                <div className="w-16 h-16 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center">
+                  <Play className="w-6 h-6 text-white fill-current ml-1" />
+                </div>
+              </div>
+              <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur px-2 py-1 rounded text-[10px] font-black text-white italic">03:45</div>
+            </div>
+            <div className="p-8 flex-grow">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-6 h-6 rounded-full overflow-hidden bg-slate-800">
+                  <img src={`https://i.pravatar.cc/100?u=${i}`} className="w-full h-full object-cover" />
+                </div>
+                <p className="text-[10px] font-black text-amber-500 uppercase tracking-widest">Julius Carr</p>
+              </div>
+              <h4 className="text-xl font-black italic uppercase text-white leading-tight tracking-tight group-hover:text-red-500 transition-colors mb-4">Why I hate traffic in LA...</h4>
+              <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
+                <div className="flex items-center gap-4">
+                  <span className="flex items-center gap-1 text-[10px] font-bold text-[#8892a4] uppercase tracking-widest"><Heart className="w-3 h-3" /> 1.2k</span>
+                  <span className="flex items-center gap-1 text-[10px] font-bold text-[#8892a4] uppercase tracking-widest"><MessageSquare className="w-3 h-3" /> 45</span>
+                </div>
+                <button className="text-[#8892a4] hover:text-white transition-colors"><Zap className="w-4 h-4" /></button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
   const renderProfile = () => {
     if (!selectedComedian) return null;
     const [profileTab, setProfileTab] = useState('VIDEOS');
@@ -388,21 +429,25 @@ export const Home: React.FC<HomeProps> = ({ navigateTo, onPostSpot, initialTab }
           <section className="relative min-h-[60vh] lg:min-h-[85vh] flex items-center pt-8 pb-16 lg:pt-16 lg:pb-24 overflow-hidden bg-[#0a0e1a]">
             <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#e53e3e]/10 blur-[150px] rounded-full"></div>
             <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#f56500]/10 blur-[150px] rounded-full"></div>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:grid lg:grid-cols-2 gap-12 items-center text-center lg:text-left">
-              <div>
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#131b2e] border border-white/5 text-[#f6a623] text-[10px] font-black uppercase tracking-[0.2em] mb-8"><Zap className="w-3 h-3" /> YOUR LEAGUE FOR LAUGHS</div>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:grid lg:grid-cols-[1fr_2.2fr] gap-12 text-center lg:text-left">
+              <div className="flex flex-col justify-center py-8">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#131b2e] border border-white/5 text-[#f6a623] text-[10px] font-black uppercase tracking-[0.2em] mb-8 w-fit mx-auto lg:mx-0"><Zap className="w-3 h-3" /> YOUR LEAGUE FOR LAUGHS</div>
                 <h1 className="text-5xl lg:text-8xl font-black leading-[0.9] mb-10 italic uppercase tracking-tighter text-white"><span className="block">DISCOVER. BOOK.</span><span className="text-brand-gradient italic">CONNECT.</span></h1>
                 <p className="text-xl text-[#8892a4] mb-12 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium">Step Your Comedy Game Up.</p>
                 <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
                   <button onClick={() => navigateTo(PageType.OPPORTUNITIES)} className="bg-brand-gradient hover:opacity-90 text-white px-10 py-5 rounded-2xl text-lg font-black transition-all flex items-center justify-center gap-2 shadow-2xl shadow-orange-900/40 group active:scale-95 italic uppercase tracking-wider">GIGS BOARD <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></button>
-                  <button onClick={() => navigateTo(PageType.PRICING)} className="bg-[#131b2e] border-2 border-white/5 hover:bg-[#1e293b] text-white px-10 py-5 rounded-2xl text-lg font-black transition-all flex items-center justify-center gap-2 shadow-xl active:scale-95 italic uppercase tracking-wider">GET STARTED</button>
+                  <button onClick={() => navigateTo(PageType.SCENES)} className="bg-[#131b2e] border-2 border-white/5 hover:bg-[#1e293b] text-white px-10 py-5 rounded-2xl text-lg font-black transition-all flex items-center justify-center gap-2 shadow-xl active:scale-95 italic uppercase tracking-wider">GET STARTED</button>
                 </div>
               </div>
-              <div className="relative hidden lg:block">
-                <div className="glass-card p-4 rounded-[3rem] border-white/10 shadow-2xl transition-all duration-700 animate-swipe-left">
-                  <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden relative">
-                    <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&q=80&w=800&h=1000" alt="Laughing Audience" className="w-full h-full object-cover grayscale opacity-60"/>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e1a] via-transparent to-transparent"></div>
+              <div className="relative hidden lg:flex flex-col">
+                <div className="glass-card p-4 rounded-[3rem] border-white/10 shadow-2xl transition-all duration-700 animate-swipe-left flex-grow flex">
+                  <div className="flex-grow rounded-[2.5rem] overflow-hidden relative">
+                    <img 
+                      src="https://leagueofcomedy.com/wp-content/uploads/2025/08/Comedy-Show-Audience-4.png" 
+                      alt="Laughing Audience" 
+                      className="w-full h-full object-cover object-center"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e1a]/80 via-transparent to-transparent"></div>
                   </div>
                 </div>
               </div>
@@ -440,12 +485,12 @@ export const Home: React.FC<HomeProps> = ({ navigateTo, onPostSpot, initialTab }
                      <div className="w-12 h-12 lg:w-20 lg:h-20 bg-[#131b2e] rounded-xl lg:rounded-3xl mb-4 lg:mb-8 flex items-center justify-center group-hover:scale-110 transition-transform"><Mic2 className="w-6 h-6 lg:w-10 lg:h-10 text-[#f6a623]" /></div>
                      <div className="text-[#e53e3e] text-[8px] lg:text-[10px] font-black uppercase tracking-[0.3em] mb-2 lg:mb-4">FOR COMEDIANS</div>
                      <h3 className="text-xl lg:text-3xl font-black italic uppercase mb-4 lg:mb-6 tracking-tight leading-none">APPLY. PERFORM.<br/>RISE.</h3>
-                     <p className="text-[#8892a4] font-medium leading-relaxed mb-6 lg:mb-10 text-xs lg:text-sm">Build your professional profile, apply to gigs, and get booked by venues and event bookers worldwide. Your next gig is waiting.</p>
+                     <p className="text-[#8892a4] font-medium leading-relaxed mb-6 lg:mb-10 text-xs lg:text-sm">Build your professional profile, apply to gigs, and get booked by venues and event organizers worldwide. Your next gig is waiting.</p>
                      <button onClick={() => navigateTo(PageType.HOME, 'ROSTER')} className="mt-auto w-full py-3 lg:py-4 rounded-xl border border-white/10 text-[10px] lg:text-[11px] font-black uppercase italic tracking-[0.2em] hover:bg-white/5 transition-all">GET STARTED</button>
                   </div>
                   <div className="bg-[#0f1628] p-6 lg:p-12 rounded-3xl lg:rounded-[3rem] border border-[#e53e3e]/20 flex flex-col items-center text-center group hover:-translate-y-2 transition-all duration-500 shadow-2xl shadow-red-900/10">
                      <div className="w-12 h-12 lg:w-20 lg:h-20 bg-[#131b2e] rounded-xl lg:rounded-3xl mb-4 lg:mb-8 flex items-center justify-center group-hover:scale-110 transition-transform"><Building className="w-6 h-6 lg:w-10 lg:h-10 text-[#f6a623]" /></div>
-                     <div className="text-[#e53e3e] text-[8px] lg:text-[10px] font-black uppercase tracking-[0.2em] mb-2 lg:mb-4">FOR VENUES & BOOKERS</div>
+                     <div className="text-[#e53e3e] text-[8px] lg:text-[10px] font-black uppercase tracking-[0.2em] mb-2 lg:mb-4">FOR VENUES & ORGANIZERS</div>
                      <h3 className="text-xl lg:text-3xl font-black italic uppercase mb-4 lg:mb-6 tracking-tight leading-none">POST. FIND. BOOK.</h3>
                      <p className="text-[#8892a4] font-medium leading-relaxed mb-6 lg:mb-10 text-xs lg:text-sm">List your shows, find the right comedian for your event, and manage everything in one place. Thousands of acts ready to perform.</p>
                      <button onClick={onPostSpot} className="mt-auto w-full py-4 lg:py-5 rounded-xl bg-brand-gradient text-white text-[10px] lg:text-[11px] font-black uppercase italic tracking-[0.2em] shadow-xl shadow-orange-900/20 active:scale-95 transition-all">POST A SPOT</button>
@@ -460,7 +505,16 @@ export const Home: React.FC<HomeProps> = ({ navigateTo, onPostSpot, initialTab }
             <div className="max-w-7xl mx-auto px-4 h-16 flex items-center gap-6">
               <div className="shrink-0"><h2 className="text-lg font-black italic uppercase tracking-tight text-white whitespace-nowrap">{currentTabLabel}</h2></div>
               {(activeTab === 'SHOWS' || activeTab === 'VENUES') && (
-                <div className="shrink-0 bg-[#0a0e1a] px-4 py-2 rounded-full border border-white/10 text-[#f6a623] font-black italic uppercase text-xs flex items-center gap-2 cursor-pointer hover:border-[#f6a623]/30 transition-all">LONDON <ChevronRight className="w-4 h-4 rotate-90" /></div>
+                <div className="relative shrink-0 transition-all">
+                  <select 
+                    value={selectedCountry}
+                    onChange={(e) => setSelectedCountry(e.target.value)}
+                    className="appearance-none bg-[#0a0e1a] pl-4 pr-10 py-2 rounded-full border border-white/10 text-[#f6a623] font-black italic uppercase text-xs cursor-pointer hover:border-[#f6a623]/30 transition-all focus:outline-none focus:ring-1 focus:ring-[#f6a623]/50"
+                  >
+                    {countries.map(c => <option key={c} value={c} className="bg-[#0a0e1a] text-white font-sans font-bold">{c}</option>)}
+                  </select>
+                  <ChevronRight className="w-4 h-4 rotate-90 text-[#f6a623] absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+                </div>
               )}
               <div className="flex-grow flex gap-2">
                 <div className="flex-grow relative">
@@ -549,13 +603,20 @@ export const Home: React.FC<HomeProps> = ({ navigateTo, onPostSpot, initialTab }
 
                 {/* Desktop View */}
                 <div className="hidden lg:block">
-                  <div className="comedy-filter-buttons no-scrollbar">
-                     <button className="comedy-filter-btn active">All Shows</button>
-                     <button className="comedy-filter-btn">Los Angeles</button>
-                     <button className="comedy-filter-btn">New York</button>
-                     <button className="comedy-filter-btn">Chicago</button>
-                     <button className="comedy-filter-btn">Las Vegas</button>
-                  </div>
+                  {selectedCountry === 'USA' && (
+                    <div className="comedy-filter-buttons no-scrollbar">
+                       <button className="comedy-filter-btn active">All Shows</button>
+                       <button className="comedy-filter-btn">Los Angeles</button>
+                       <button className="comedy-filter-btn">New York</button>
+                       <button className="comedy-filter-btn">Chicago</button>
+                       <button className="comedy-filter-btn">Las Vegas</button>
+                       <button className="comedy-filter-btn">San Francisco</button>
+                       <button className="comedy-filter-btn">Austin</button>
+                       <button className="comedy-filter-btn">Boston</button>
+                       <button className="comedy-filter-btn">Denver</button>
+                       <button className="comedy-filter-btn">Portland</button>
+                    </div>
+                  )}
                   <div className="comedy-shows-container">
                     {[
                       { title: "Music City Rollin Jamboree Comedy Tour", venue: "L&L Market", city: "Nashville", date: "Feb 17, 2026", time: "11:30 AM", price: "50.00" },
@@ -592,6 +653,7 @@ export const Home: React.FC<HomeProps> = ({ navigateTo, onPostSpot, initialTab }
             {activeTab === 'ROSTER' && (selectedComedianId ? renderProfile() : renderRoster())}
             {activeTab === 'VENUES' && renderVenues()}
             {activeTab === 'FESTIVALS' && renderFestivals()}
+            {activeTab === 'CLIPS' && renderClips()}
           </div>
         </div>
       )}

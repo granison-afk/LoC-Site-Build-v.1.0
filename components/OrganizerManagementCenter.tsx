@@ -3,7 +3,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Database, RefreshCw, BarChart3, FileText, CheckCircle2 } from 'lucide-react';
 
-export const ProducerManagementCenter: React.FC = () => {
+export const OrganizerManagementCenter: React.FC = () => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -30,7 +30,7 @@ export const ProducerManagementCenter: React.FC = () => {
           className="text-center mb-24"
         >
           <motion.h1 variants={itemVariants} className="text-5xl md:text-8xl font-black italic uppercase tracking-tighter leading-none mb-6">
-            PRODUCER <span className="text-amber-500">MANAGEMENT CENTER</span>
+            ORGANIZER <span className="text-amber-500">MANAGEMENT CENTER</span>
           </motion.h1>
           <motion.p variants={itemVariants} className="text-slate-400 text-xl italic max-w-2xl mx-auto">
             Manage your events and tracking in one place.

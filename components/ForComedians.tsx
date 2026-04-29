@@ -34,7 +34,7 @@ export const ForComedians: React.FC<ForComediansProps> = ({ navigateTo }) => {
             <span className="gradient-text">START GETTING BOOKED.</span>
           </h1>
           <p className="text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed">
-            League of Comedy connects you directly with bookers and venues looking for talent. Find gigs, apply with one click, and grow your career.
+            League of Comedy connects you directly with organizers and venues looking for talent. Find gigs, apply with one click, and grow your career.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="bg-red-600 hover:bg-red-700 text-white px-10 py-5 rounded-2xl text-xl font-bold transition-all shadow-xl shadow-red-900/30 active:scale-95">
@@ -111,7 +111,7 @@ export const ForComedians: React.FC<ForComediansProps> = ({ navigateTo }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
             { icon: <MapPin className="text-red-500" />, title: "Find Local Gigs", desc: "Search for open spots at venues near you. Filter by location, date, spot type, and pay." },
-            { icon: <Video className="text-amber-500" />, title: "Showcase Your Videos", desc: "Upload your best clips so bookers can see your style before booking. No more describing your act." },
+            { icon: <Video className="text-amber-500" />, title: "Showcase Your Videos", desc: "Upload your best clips so organizers can see your style before booking. No more describing your act." },
             { icon: <MousePointer2 className="text-blue-500" />, title: "One-Click Applications", desc: "Apply to opportunities instantly. Your profile and videos do the talking. No more cover letters." },
             { icon: <Bell className="text-emerald-500" />, title: "Get Notified", desc: "Receive email alerts when new spots open in your area. Never miss an opportunity again." },
             { icon: <UserCircle className="text-purple-500" />, title: "Build Your Profile", desc: "Create a professional comedy profile that showcases your experience, style, and best work." },
@@ -137,7 +137,7 @@ export const ForComedians: React.FC<ForComediansProps> = ({ navigateTo }) => {
            {[
              { step: 1, title: "Create Your Profile", desc: "Sign up and build your comedy profile. Add your bio, experience, location, and upload your best video clips." },
              { step: 2, title: "Browse & Apply", desc: "Search for open spots at venues near you. Found one you like? Apply with one click and add a personal message." },
-             { step: 3, title: "Get Booked", desc: "Bookers review your profile and videos. When they like what they see, you get the booking. Simple as that." }
+             { step: 3, title: "Get Booked", desc: "Organizers review your profile and videos. When they like what they see, you get the booking. Simple as that." }
            ].map((item) => (
              <div key={item.step} className="text-center group">
                <div className="w-16 h-16 bg-red-600 text-white rounded-full flex items-center justify-center text-2xl font-black mx-auto mb-6 group-hover:rotate-12 transition-transform shadow-xl shadow-red-600/20">

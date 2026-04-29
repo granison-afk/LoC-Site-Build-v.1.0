@@ -33,7 +33,7 @@ export const RevenueTicketing: React.FC = () => {
             REVENUE & <span className="text-amber-500">TICKETING</span>
           </motion.h1>
           <motion.p variants={itemVariants} className="text-slate-400 text-xl italic max-w-2xl mx-auto">
-            The "no-joke" ticketing platform and merchant services designed specifically for comedy producers.
+            The "no-joke" ticketing platform and merchant services Designed specifically for comedy organizers.
           </motion.p>
         </motion.div>
 

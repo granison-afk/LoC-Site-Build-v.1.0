@@ -41,6 +41,12 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({ role, setRole }) =
       { label: 'Upcoming', val: '8', icon: <Calendar className="text-amber-500" /> },
       { label: 'Points', val: '9,850', icon: <Trophy className="text-blue-500" /> },
       { label: 'Earnings', val: '$1.4k', icon: <CreditCard className="text-emerald-500" /> },
+    ],
+    organizer: [
+      { label: 'Shows', val: '12', icon: <Calendar className="text-red-500" /> },
+      { label: 'Tickets Sold', val: '1.2k', icon: <Ticket className="text-amber-500" /> },
+      { label: 'Revenue', val: '$15k', icon: <CreditCard className="text-emerald-500" /> },
+      { label: 'Followers', val: '850', icon: <Users className="text-blue-500" /> },
     ]
   };
 
@@ -57,7 +63,7 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({ role, setRole }) =
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {(role === 'comedian' ? stats.comedian : stats.fan).map((s, i) => (
+        {stats[role as keyof typeof stats].map((s, i) => (
           <div key={i} className="glass-card p-6 rounded-3xl border-slate-800/50 hover:bg-slate-900/50 transition-all group">
             <div className="flex justify-between items-start mb-4">
                <div className="p-2 bg-slate-950 rounded-xl border border-slate-800 group-hover:scale-110 transition-transform">{s.icon}</div>
@@ -242,9 +248,10 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({ role, setRole }) =
 
            <div className="glass-card p-6 rounded-[2rem] border-slate-800 text-center">
              <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 italic">Switch Role View</p>
-             <div className="grid grid-cols-2 gap-2">
+             <div className="grid grid-cols-1 gap-2">
                <button onClick={() => setRole('fan')} className={`py-2 rounded-lg text-[8px] font-black uppercase transition-all ${role === 'fan' ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-600 border border-transparent hover:text-slate-400'}`}>Fan View</button>
                <button onClick={() => setRole('comedian')} className={`py-2 rounded-lg text-[8px] font-black uppercase transition-all ${role === 'comedian' ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-600 border border-transparent hover:text-slate-400'}`}>Talent View</button>
+               <button onClick={() => setRole('organizer')} className={`py-2 rounded-lg text-[8px] font-black uppercase transition-all ${role === 'organizer' ? 'bg-slate-800 text-white border border-slate-700' : 'text-slate-600 border border-transparent hover:text-slate-400'}`}>Organizer View</button>
              </div>
            </div>
         </aside>

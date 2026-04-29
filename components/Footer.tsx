@@ -27,24 +27,17 @@ export const Footer: React.FC<FooterProps> = ({ navigateTo }) => {
               <li><button onClick={() => navigateTo(PageType.COMEDIANS)} className="text-left hover:text-amber-500 transition-colors">Getting Started</button></li>
               <li><button className="text-left hover:text-amber-500 transition-colors">Open Mic Nights</button></li>
               <li><button onClick={() => navigateTo(PageType.HOW_TO_GET_GIGS)} className="text-left hover:text-amber-500 transition-colors">How to Get Gigs</button></li>
-              <li><button className="text-left hover:text-amber-500 transition-colors">Find Bookers</button></li>
+              <li><button className="text-left hover:text-amber-500 transition-colors">Find Organizers</button></li>
             </ul>
           </div>
           <div>
-            <h3 className="text-white font-bold mb-4">For Producers</h3>
+            <h3 className="text-white font-bold mb-4">For Organizers</h3>
             <ul className="space-y-2 text-slate-400 text-sm">
-              <li><button onClick={() => navigateTo(PageType.PRODUCER_GETTING_STARTED)} className="text-left hover:text-amber-500 transition-colors">Getting Started</button></li>
+              <li><button onClick={() => navigateTo(PageType.ORGANIZER_GETTING_STARTED)} className="text-left hover:text-amber-500 transition-colors">Getting Started</button></li>
+              <li><button onClick={() => navigateTo(PageType.ORGANIZER_MANAGEMENT_CENTER)} className="text-left hover:text-amber-500 transition-colors">Management Center</button></li>
               <li><button onClick={() => navigateTo(PageType.REVENUE_TICKETING)} className="text-left hover:text-amber-500 transition-colors">Revenue & Ticketing</button></li>
-              <li><button onClick={() => navigateTo(PageType.DIGITAL_ENGAGEMENT)} className="text-left hover:text-amber-500 transition-colors">Digital Engagement</button></li>
-              <li><button onClick={() => navigateTo(PageType.PRODUCER_MANAGEMENT_CENTER)} className="text-left hover:text-amber-500 transition-colors">Management Center</button></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-white font-bold mb-4">For Bookers</h3>
-            <ul className="space-y-2 text-slate-400 text-sm">
-              <li><button onClick={() => navigateTo(PageType.BOOKER_GETTING_STARTED)} className="text-left hover:text-amber-500 transition-colors">Getting Started</button></li>
               <li><button onClick={() => navigateTo(PageType.CORPORATE)} className="text-left hover:text-amber-500 transition-colors">Corporate Events</button></li>
-              <li><button className="text-left hover:text-amber-500 transition-colors">How to Book a Comedian</button></li>
+              <li><button onClick={() => navigateTo(PageType.DIGITAL_ENGAGEMENT)} className="text-left hover:text-amber-500 transition-colors">Digital Engagement</button></li>
             </ul>
           </div>
           <div>
