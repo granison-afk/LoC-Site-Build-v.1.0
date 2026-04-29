@@ -44,7 +44,7 @@ export const ScenesPage: React.FC<ScenesPageProps> = ({ navigateTo, initialTab }
     city: sceneName,
     state: initialTab?.includes('london') ? 'UK' : 'CA',
     followers: "1,204",
-    coverImage: "https://images.unsplash.com/photo-1541339905195-03f4770d4074?auto=format&fit=crop&q=80&w=1600&h=400"
+    coverImage: "https://plus.unsplash.com/premium_photo-1725408106567-a77bd9beff7c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8TG9zJTIwQW5nZWxlc3xlbnwwfHwwfHx8MA%3D%3D"
   };
 
   const tabs = [
@@ -246,7 +246,7 @@ export const ScenesPage: React.FC<ScenesPageProps> = ({ navigateTo, initialTab }
         <div className="h-64 lg:h-96 w-full relative overflow-hidden">
           <img 
             src={sceneData.coverImage} 
-            className="w-full h-full object-cover grayscale opacity-40" 
+            className="w-full h-full object-cover opacity-40" 
             alt={sceneData.name}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e1a] via-[#0a0e1a]/20 to-transparent"></div>
