@@ -12,6 +12,9 @@ import {
   Briefcase, 
   MapPin, 
   ChevronRight, 
+  ChevronDown,
+  Search,
+  X,
   Users, 
   Mic2,
   Trophy,
@@ -31,6 +34,22 @@ interface ScenesPageProps {
 export const ScenesPage: React.FC<ScenesPageProps> = ({ navigateTo, initialTab }) => {
   const [activeTab, setActiveTab] = useState('SHOWS');
   const [isFollowed, setIsFollowed] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const AVAILABLE_SCENES = [
+    { name: "Los Angeles", slug: "los-angeles", region: "CA", country: "USA" },
+    { name: "New York", slug: "new-york", region: "NY", country: "USA" },
+    { name: "London", slug: "london", region: "UK", country: "UK" },
+    { name: "Chicago", slug: "chicago", region: "IL", country: "USA" },
+    { name: "Austin", slug: "austin", region: "TX", country: "USA" },
+    { name: "Manchester", slug: "manchester", region: "UK", country: "UK" },
+    { name: "Toronto", slug: "toronto", region: "ON", country: "Canada" },
+  ];
+
+  const filteredScenes = AVAILABLE_SCENES.filter(s => 
+    s.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const getSceneName = () => {
     if (!initialTab) return "Los Angeles";
@@ -219,9 +238,9 @@ export const ScenesPage: React.FC<ScenesPageProps> = ({ navigateTo, initialTab }
   );
 
   const renderClips = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {mockClips.map(clip => (
-        <div key={clip.id} className="glass-card rounded-[2rem] overflow-hidden border border-white/5 group h-full flex flex-col">
+        <div key={clip.id} className="glass-card rounded-3xl lg:rounded-[2rem] overflow-hidden border border-white/5 group h-full flex flex-col">
           <div className="aspect-video relative overflow-hidden bg-slate-900">
             <img src={clip.thumbnail} className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" alt={clip.title} />
             <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-100 group-hover:opacity-0 transition-opacity">
@@ -230,9 +249,9 @@ export const ScenesPage: React.FC<ScenesPageProps> = ({ navigateTo, initialTab }
               </div>
             </div>
           </div>
-          <div className="p-6 flex-grow">
-            <p className="text-[10px] font-black text-amber-500 uppercase tracking-[0.2em] mb-2">{clip.comedian}</p>
-            <h4 className="text-lg font-black italic uppercase text-white leading-tight tracking-tight group-hover:text-red-500 transition-colors">{clip.title}</h4>
+          <div className="p-5 lg:p-6 flex-grow">
+            <p className="text-[9px] lg:text-[10px] font-black text-amber-500 uppercase tracking-[0.2em] mb-2">{clip.comedian}</p>
+            <h4 className="text-lg font-black italic uppercase text-white leading-tight tracking-tight group-hover:text-red-500 transition-colors line-clamp-2">{clip.title}</h4>
           </div>
         </div>
       ))}
@@ -242,7 +261,88 @@ export const ScenesPage: React.FC<ScenesPageProps> = ({ navigateTo, initialTab }
   return (
     <div className="min-h-screen bg-[#0a0e1a]">
       {/* Dynamic Header */}
-      <div className="relative pt-20">
+      <div className="relative">
+        {/* Search Switcher - Top on Mobile, Relative on Desktop */}
+        <div className="absolute top-6 left-0 right-0 z-50 px-4 md:hidden">
+          <div className="flex flex-row gap-2">
+            <div className="relative flex-grow">
+              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                <Search className="w-4 h-4 text-slate-500" />
+              </div>
+              <input 
+                type="text"
+                placeholder="Search scenes..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setIsDropdownOpen(true)}
+                className="w-full bg-[#0f1628]/95 backdrop-blur-xl border border-white/10 rounded-2xl py-4 pl-10 pr-10 text-white text-xs font-bold placeholder:text-slate-600 focus:outline-none focus:border-red-500/50 transition-all shadow-2xl"
+              />
+              {searchQuery && (
+                <button 
+                  onClick={() => setSearchQuery('')}
+                  className="absolute inset-y-0 right-3 flex items-center text-slate-500 hover:text-white transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+              {isDropdownOpen && searchQuery && (
+                <div className="absolute top-full left-0 right-0 mt-2 bg-[#0f1628] border border-white/10 rounded-2xl overflow-hidden z-50 shadow-2xl">
+                  {filteredScenes.length > 0 ? (
+                    filteredScenes.map(scene => (
+                      <button
+                        key={scene.slug}
+                        onClick={() => {
+                          navigateTo(PageType.SCENES, scene.slug);
+                          setIsDropdownOpen(false);
+                          setSearchQuery('');
+                        }}
+                        className="w-full px-4 py-4 text-left hover:bg-white/5 flex items-center justify-between group"
+                      >
+                        <div>
+                          <p className="text-white font-black italic uppercase tracking-tight text-xs">{scene.name}</p>
+                        </div>
+                        <ChevronRight className="w-3 h-3 text-slate-700" />
+                      </button>
+                    ))
+                  ) : (
+                    <div className="px-4 py-6 text-center text-slate-500 text-[10px] font-bold italic uppercase">No results</div>
+                  )}
+                </div>
+              )}
+            </div>
+            
+            <div className="relative shrink-0">
+              <button 
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="flex items-center justify-center bg-[#0f1628]/95 backdrop-blur-xl border border-white/10 rounded-2xl py-4 px-4 text-white text-[10px] font-black italic uppercase tracking-widest shadow-2xl min-w-[80px]"
+              >
+                <div className="flex items-center gap-1">
+                  <span>SCENES</span>
+                  <ChevronDown className={`w-3 h-3 text-red-500 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                </div>
+              </button>
+
+              {isDropdownOpen && !searchQuery && (
+                <div className="absolute top-full right-0 mt-2 w-48 bg-[#0f1628] border border-white/10 rounded-2xl overflow-hidden z-50 shadow-2xl">
+                  {AVAILABLE_SCENES.map(scene => (
+                    <button
+                      key={scene.slug}
+                      onClick={() => {
+                        navigateTo(PageType.SCENES, scene.slug);
+                        setIsDropdownOpen(false);
+                      }}
+                      className="w-full px-4 py-4 text-left hover:bg-white/5 flex items-center justify-between group"
+                    >
+                      <p className="text-white font-black italic uppercase tracking-tight text-xs">{scene.name}</p>
+                      {sceneName.toLowerCase() === scene.name.toLowerCase() && <div className="w-1 h-1 bg-red-500 rounded-full" />}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
         <div className="h-64 lg:h-96 w-full relative overflow-hidden">
           <img 
             src={sceneData.coverImage} 
@@ -253,6 +353,94 @@ export const ScenesPage: React.FC<ScenesPageProps> = ({ navigateTo, initialTab }
         </div>
         
         <div className="max-w-7xl mx-auto px-4 relative -mt-32 pb-8">
+          {/* Scene Switcher / Search (Desktop Only) */}
+          <div className="hidden md:flex mb-12 flex-row gap-4 items-center">
+            <div className="relative w-full max-w-md">
+              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                <Search className="w-4 h-4 text-slate-500" />
+              </div>
+              <input 
+                type="text"
+                placeholder="Search comedy scenes..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setIsDropdownOpen(true)}
+                className="w-full bg-[#0f1628]/90 backdrop-blur-xl border border-white/10 rounded-2xl py-4 pl-12 pr-12 text-white text-sm font-bold placeholder:text-slate-600 focus:outline-none focus:border-red-500/50 transition-all shadow-2xl"
+              />
+              {searchQuery && (
+                <button 
+                  onClick={() => setSearchQuery('')}
+                  className="absolute inset-y-0 right-4 flex items-center text-slate-500 hover:text-white transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+              {isDropdownOpen && searchQuery && (
+                <div className="absolute top-full left-0 right-0 mt-2 bg-[#0f1628] border border-white/10 rounded-2xl overflow-hidden z-50 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
+                  {filteredScenes.length > 0 ? (
+                    filteredScenes.map(scene => (
+                      <button
+                        key={scene.slug}
+                        onClick={() => {
+                          navigateTo(PageType.SCENES, scene.slug);
+                          setIsDropdownOpen(false);
+                          setSearchQuery('');
+                        }}
+                        className="w-full px-6 py-4 text-left hover:bg-white/5 flex items-center justify-between group transition-colors"
+                      >
+                        <div>
+                          <p className="text-white font-black italic uppercase tracking-tight group-hover:text-red-500 transition-colors">{scene.name}</p>
+                          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{scene.region}, {scene.country}</p>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-slate-700 group-hover:text-red-500 transition-all" />
+                      </button>
+                    ))
+                  ) : (
+                    <div className="px-6 py-8 text-center">
+                      <p className="text-slate-500 text-sm font-bold italic uppercase">No scenes found</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="relative w-full md:w-auto">
+              <button 
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="flex items-center justify-between md:justify-start gap-3 w-full md:w-auto bg-[#0f1628]/90 backdrop-blur-xl border border-white/10 rounded-2xl py-4 px-6 text-white text-sm font-bold hover:border-white/20 transition-all shadow-2xl whitespace-nowrap"
+              >
+                <span>MORE SCENES</span>
+                <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {isDropdownOpen && !searchQuery && (
+                <div className="absolute top-full left-0 md:left-auto md:right-0 mt-2 w-full md:w-64 bg-[#0f1628] border border-white/10 rounded-2xl overflow-hidden z-50 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="p-2 border-b border-white/5 bg-slate-900/50">
+                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] px-4 py-2">Popular Scenes</p>
+                  </div>
+                  <div className="max-h-80 overflow-y-auto no-scrollbar">
+                    {AVAILABLE_SCENES.map(scene => (
+                      <button
+                        key={scene.slug}
+                        onClick={() => {
+                          navigateTo(PageType.SCENES, scene.slug);
+                          setIsDropdownOpen(false);
+                        }}
+                        className={`w-full px-6 py-4 text-left hover:bg-white/5 flex items-center justify-between group transition-colors ${sceneName.toLowerCase() === scene.name.toLowerCase() ? 'bg-white/5' : ''}`}
+                      >
+                        <div>
+                          <p className={`font-black italic uppercase tracking-tight transition-colors ${sceneName.toLowerCase() === scene.name.toLowerCase() ? 'text-red-500' : 'text-white group-hover:text-red-500'}`}>{scene.name}</p>
+                          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{scene.region}</p>
+                        </div>
+                        {sceneName.toLowerCase() === scene.name.toLowerCase() && <Check className="w-4 h-4 text-red-500" />}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-4">
               <div className="flex items-center gap-3">

@@ -255,30 +255,30 @@ export const Home: React.FC<HomeProps> = ({ navigateTo, onPostSpot, initialTab }
 
   const renderClips = () => (
     <div className="animate-in fade-in duration-500">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
         {[1, 2, 3, 4, 5, 6].map(i => (
-          <div key={i} className="glass-card rounded-[2.5rem] overflow-hidden border border-white/5 group h-full flex flex-col">
+          <div key={i} className="glass-card rounded-3xl lg:rounded-[2.5rem] overflow-hidden border border-white/5 group h-full flex flex-col">
             <div className="aspect-video relative overflow-hidden bg-slate-900">
               <img src={`https://picsum.photos/seed/clip${i}/800/450`} className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" alt="Clip" />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-100 group-hover:opacity-0 transition-opacity">
-                <div className="w-16 h-16 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center">
-                  <Play className="w-6 h-6 text-white fill-current ml-1" />
+                <div className="w-12 h-12 lg:w-16 lg:h-16 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center">
+                  <Play className="w-4 h-4 lg:w-6 lg:h-6 text-white fill-current ml-1" />
                 </div>
               </div>
-              <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur px-2 py-1 rounded text-[10px] font-black text-white italic">03:45</div>
+              <div className="absolute bottom-2 right-2 lg:bottom-4 lg:right-4 bg-black/60 backdrop-blur px-2 py-1 rounded text-[10px] font-black text-white italic">03:45</div>
             </div>
-            <div className="p-8 flex-grow">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-6 h-6 rounded-full overflow-hidden bg-slate-800">
+            <div className="p-5 lg:p-8 flex-grow">
+              <div className="flex items-center gap-2 mb-3 lg:mb-4">
+                <div className="w-5 h-5 lg:w-6 lg:h-6 rounded-full overflow-hidden bg-slate-800">
                   <img src={`https://i.pravatar.cc/100?u=${i}`} className="w-full h-full object-cover" />
                 </div>
-                <p className="text-[10px] font-black text-amber-500 uppercase tracking-widest">Julius Carr</p>
+                <p className="text-[9px] lg:text-[10px] font-black text-amber-500 uppercase tracking-widest">Julius Carr</p>
               </div>
-              <h4 className="text-xl font-black italic uppercase text-white leading-tight tracking-tight group-hover:text-red-500 transition-colors mb-4">Why I hate traffic in LA...</h4>
+              <h4 className="text-lg lg:text-xl font-black italic uppercase text-white leading-tight tracking-tight group-hover:text-red-500 transition-colors mb-4 line-clamp-2">Why I hate traffic in LA...</h4>
               <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
                 <div className="flex items-center gap-4">
-                  <span className="flex items-center gap-1 text-[10px] font-bold text-[#8892a4] uppercase tracking-widest"><Heart className="w-3 h-3" /> 1.2k</span>
-                  <span className="flex items-center gap-1 text-[10px] font-bold text-[#8892a4] uppercase tracking-widest"><MessageSquare className="w-3 h-3" /> 45</span>
+                  <span className="flex items-center gap-1 text-[9px] lg:text-[10px] font-bold text-[#8892a4] uppercase tracking-widest"><Heart className="w-3 h-3" /> 1.2k</span>
+                  <span className="flex items-center gap-1 text-[9px] lg:text-[10px] font-bold text-[#8892a4] uppercase tracking-widest"><MessageSquare className="w-3 h-3" /> 45</span>
                 </div>
                 <button className="text-[#8892a4] hover:text-white transition-colors"><Zap className="w-4 h-4" /></button>
               </div>
@@ -401,6 +401,7 @@ export const Home: React.FC<HomeProps> = ({ navigateTo, onPostSpot, initialTab }
                 else if (cat.label === 'Shows') navigateTo(PageType.HOME, 'SHOWS');
                 else if (cat.label === 'Venues') navigateTo(PageType.HOME, 'VENUES');
                 else if (cat.label === 'Festivals') navigateTo(PageType.HOME, 'FESTIVALS');
+                else if (cat.label === 'Clips') navigateTo(PageType.HOME, 'CLIPS');
               }}
               className="flex flex-col items-center gap-2 shrink-0 cursor-pointer active:scale-95 transition-transform"
             >
